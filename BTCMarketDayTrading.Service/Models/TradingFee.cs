@@ -7,6 +7,12 @@ namespace BTCMarketDayTrading.Service.Models
 {
     public class TradingFee
     {
-        public double TradingFeeRate { get; set; }
+        public double? tradingFeeRate { get; set; }
+        public bool success { get; set; }
+        public int? errorCode { get; set; }
+        public string errorMessage { get; set; }
+        public double? volume30Day { get; set; }
+        public double? makerTradingFeeRate { get; set; }
+        public double? takerTradingFreeRate { get; set; }
     }
 }

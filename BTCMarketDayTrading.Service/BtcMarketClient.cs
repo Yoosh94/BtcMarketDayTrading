@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace BTCMarketDayTrading.Service
@@ -18,12 +20,34 @@ namespace BTCMarketDayTrading.Service
             this.client = client;
             _options = options;
         }
-        public async TradingFee GetTradingFee()
+        public async Task<TradingFee> GetTradingFee()
         {
-            var endpoint = "/account/{instrument}/{currency}/tradingfee";
+            var endpoint = "/account/BTC/AUD/tradingfee";
+            string signature = CreateSignature(endpoint);
+            client.DefaultRequestHeaders.Add("signature", signature);
             var response =  await client.GetAsync(endpoint);
-            var content = response.Content.ReadAsAsync<TradingFee>();
+            var content = await response.Content.ReadAsAsync<TradingFee>();
             return content;
+        }
+
+        public async Task<Transactions> GetTransaction(string currency)
+        {
+            var endpoint = $"/v2/transaction/history/{currency}";
+            string signature = CreateSignature(endpoint);
+            client.DefaultRequestHeaders.Add("signature", signature);
+            var response = await client.GetAsync(endpoint);
+            var content = await response.Content.ReadAsAsync<Transactions>();
+            return content;
+        }
+
+        private string CreateSignature(string endpoint)
+        {
+            var data = $"{endpoint}\n{client.DefaultRequestHeaders.GetValues("timestamp").First()}\n";
+            var encoding = Encoding.UTF8;
+            using (var hasher = new HMACSHA512(Convert.FromBase64String(_options.Value.PrivateApiKey)))
+            {
+                return Convert.ToBase64String(hasher.ComputeHash(encoding.GetBytes(data)));
+            }
         }
     }
 }

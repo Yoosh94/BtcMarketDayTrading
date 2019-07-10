@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BTCMarketDayTrading.Service.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BTCMarketDayTrading.Service.Controllers
@@ -18,9 +19,19 @@ namespace BTCMarketDayTrading.Service.Controllers
 
         [HttpGet]
         [Route("fee")]
-        public ActionResult<IEnumerable<string>> GetTradingFee()
+        public async Task<ActionResult<double>> GetTradingFee()
         {
-            _btcClient.GetTradingFee();
+            var value = await _btcClient.GetTradingFee();
+            return value.tradingFeeRate;
+        }
+
+        [HttpGet]
+        [Route("transaction")]
+        public async Task<IEnumerable<Transaction>> GetTransactions()
+        {
+
+            var value = await _btcClient.GetTransaction("LTC");
+            return value.transactions;
         }
 
         // GET api/values/5
