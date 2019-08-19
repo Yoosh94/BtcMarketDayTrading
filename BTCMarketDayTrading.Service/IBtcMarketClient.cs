@@ -9,6 +9,8 @@ namespace BTCMarketDayTrading.Service
     public interface IBtcMarketClient
     {
         Task<TradingFee> GetTradingFee();
+        Task<Transactions> GetTransaction();
         Task<Transactions> GetTransaction(string currency);
+        Task<OrderResponse> GetOrderHistory(OrderRequest order);
     }
 }

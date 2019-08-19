@@ -26,12 +26,32 @@ namespace BTCMarketDayTrading.Service.Controllers
         }
 
         [HttpGet]
-        [Route("transaction")]
+        [Route("transactions")]
         public async Task<IEnumerable<Transaction>> GetTransactions()
         {
 
-            var value = await _btcClient.GetTransaction("LTC");
+            var value = await _btcClient.GetTransaction();
             return value.transactions;
+        }
+
+        [HttpGet]
+        [Route("transaction/{currency}")]
+        public async Task<IEnumerable<Transaction>> GetTransactions(string currency)
+        {
+
+            var value = await _btcClient.GetTransaction(currency);
+            //var earliest = value.transactions.Where(x => x.action == "Buy Order");
+            return value.transactions;
+        }
+
+        [HttpPost]
+        [Route("order")]
+        public async Task<List<Order>> GetOrderHistory([FromBody] OrderRequest order)
+        {
+
+            var value = await _btcClient.GetOrderHistory(order);
+            //var earliest = value.transactions.Where(x => x.action == "Buy Order");
+            return value.orders;
         }
 
         // GET api/values/5
