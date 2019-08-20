@@ -38,7 +38,7 @@ namespace BTCMarketDayTrading.Service
             var baseUrl = Configuration.GetSection("BtcMarketParameters:BtcMarketBaseUrl").Value;
             var privateApiKey = Configuration.GetSection("BtcMarketParameters:PrivateApiKey").Value;
             var publicApiKey = Configuration.GetSection("BtcMarketParameters:PublicApiKey").Value;
-
+#
 
             services.AddHttpClient<IBtcMarketClient, BtcMarketClient>(x =>
             {
@@ -47,7 +47,7 @@ namespace BTCMarketDayTrading.Service
                     .Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 x.DefaultRequestHeaders.AcceptCharset.Add(new StringWithQualityHeaderValue("UTF-8"));
                 x.DefaultRequestHeaders.Add("apikey", publicApiKey);
-                x.DefaultRequestHeaders.Add("timestamp", GetNetworkTime().ToString());
+                x.DefaultRequestHeaders.Add("timestamp", GetNetworkTime().ToString())
             });
 
         }
