@@ -47,7 +47,7 @@ namespace BTCMarketDayTrading.Service
                     .Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 x.DefaultRequestHeaders.AcceptCharset.Add(new StringWithQualityHeaderValue("UTF-8"));
                 x.DefaultRequestHeaders.Add("apikey", publicApiKey);
-                x.DefaultRequestHeaders.Add("timestamp", GetNetworkTime().ToString())
+                x.DefaultRequestHeaders.Add("timestamp", GetNetworkTime().ToString());
             });
 
         }
