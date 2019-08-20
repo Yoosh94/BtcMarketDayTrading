@@ -4,14 +4,17 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "braces": "^3.0.2",
     "jquery": "3.4.0",
+    "mem": "^5.1.1",
     "react": "^16.0.0",
     "react-dom": "^16.2.1",
     "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^4.2.2",
     "react-scripts": "^1.1.5",
     "reactstrap": "^6.3.0",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "webpack-dev-server": "^3.8.0"
   },
   "devDependencies": {
     "ajv": "^6.0.0",
