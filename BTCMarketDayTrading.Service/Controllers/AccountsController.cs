@@ -9,10 +9,10 @@ namespace BTCMarketDayTrading.Service.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class AccountsController : ControllerBase
     {
         private readonly IBtcMarketClient _btcClient;
-        public ValuesController(IBtcMarketClient btcClient)
+        public AccountsController(IBtcMarketClient btcClient)
         {
             _btcClient = btcClient;
         }
@@ -46,37 +46,13 @@ namespace BTCMarketDayTrading.Service.Controllers
 
         [HttpPost]
         [Route("order")]
-        public async Task<List<Order>> GetOrderHistory([FromBody] OrderRequest order)
+        public async Task<IEnumerable<Order>> GetOrderHistory([FromBody] OrderRequest order)
         {
 
             var value = await _btcClient.GetOrderHistory(order);
-            //var earliest = value.transactions.Where(x => x.action == "Buy Order");
-            return value.orders;
-        }
-
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            // This should hopefully give us all the bid orders that went through.
+            var bidOnly = value.orders.Where(x => x.orderSide == "Bid" && x.trades.Count > 0);
+            return bidOnly;
         }
     }
 }
