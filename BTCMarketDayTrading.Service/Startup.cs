@@ -38,7 +38,7 @@ namespace BTCMarketDayTrading.Service
             var baseUrl = Configuration.GetSection("BtcMarketParameters:BtcMarketBaseUrl").Value;
             var privateApiKey = Configuration.GetSection("BtcMarketParameters:PrivateApiKey").Value;
             var publicApiKey = Configuration.GetSection("BtcMarketParameters:PublicApiKey").Value;
-#
+
 
             services.AddHttpClient<IBtcMarketClient, BtcMarketClient>(x =>
             {
